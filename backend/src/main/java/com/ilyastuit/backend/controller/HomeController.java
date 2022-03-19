@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/api")
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<App> home() {
         return ResponseEntity.ok(new App("App", "1.0"));
     }
