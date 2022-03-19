@@ -12,7 +12,8 @@ public class HomeController {
 
     @GetMapping("")
     public ResponseEntity<App> home() {
-        return ResponseEntity.ok(new App("App", "1.0"));
+        App app = new App("App", "1.0");
+        return ResponseEntity.ok(app);
     }
 
 }

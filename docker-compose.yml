@@ -10,12 +10,12 @@ services:
     ports:
       - "8081:80"
 
-  frontend:
+  frontend-nginx:
     build:
       context: ./frontend/docker
       dockerfile: frontend.docker
     volumes:
-      - ./frontend/public:/frontend/public
+      - ./frontend/dist/frontend:/frontend/public
       - ./frontend/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - backend
