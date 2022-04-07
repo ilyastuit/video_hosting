@@ -15,9 +15,16 @@ services:
       context: ./frontend/docker
       dockerfile: frontend.docker
     volumes:
-      - ./frontend/dist/frontend:/frontend/public
+      - ./frontend:/frontend
       - ./frontend/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - backend
     ports:
       - "8080:80"
+
+  frontend-nodejs:
+    image: node:17-alpine3.14
+    volumes:
+      - ./frontend:/frontend
+    working_dir: /frontend
+    tty: true
