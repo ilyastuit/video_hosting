@@ -1,9 +1,12 @@
-up: create-jar docker-build docker-up
+up: create-jar npm-install docker-build docker-up
 
 down: docker-down
 
 create-jar:
 	./gradlew clean bootJar --stacktrace --info
+
+npm-install:
+	cd frontend; npm install
 
 docker-build:
 	docker-compose build
