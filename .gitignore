@@ -42,8 +42,6 @@ bin/
 # profiling files
 chrome-profiler-events*.json
 
-# IDEs and editors
-/.idea
 .c9/
 *.launch
 .settings/

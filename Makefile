@@ -5,6 +5,15 @@ down: docker-down
 create-jar:
 	./gradlew clean bootJar --stacktrace --info
 
+clean-build:
+	./gradlew clean build --stacktrace --info
+
+unit-tests:
+	./gradlew unitTest --rerun-tasks
+
+integration-tests:
+	./gradlew integrationTest --rerun-tasks
+
 npm-install:
 	cd frontend; npm install
 

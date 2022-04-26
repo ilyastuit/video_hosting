@@ -1,12 +1,10 @@
 plugins {
     id 'org.springframework.boot' version '2.6.4'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'application'
-    id 'java'
 }
 
 application {
-    mainClassName = 'com.ilyastuit.backend.BackendApplication'
+    getMainClass().set("com.ilyastuit.BackendApplication")
 }
 
 bootJar {
@@ -20,22 +18,101 @@ jar {
 
 group = 'com.ilyastuit'
 version = '1.0'
-sourceCompatibility = '11'
+targetCompatibility = 11
+sourceCompatibility = 11
 
-repositories {
-    mavenCentral()
+configurations {
+    unitTestImplementation.extendsFrom(testImplementation)
+    unitTestRuntimeOnly.extendsFrom(testRuntimeOnly)
+
+    integrationTestImplementation.extendsFrom(testImplementation)
+    integrationTestRuntimeOnly.extendsFrom(testRuntimeOnly)
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-web')
 
-    implementation 'com.h2database:h2'
-    runtimeOnly 'org.postgresql:postgresql'
+    implementation('com.h2database:h2')
+    runtimeOnly('org.postgresql:postgresql')
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    unitTestImplementation('org.junit.jupiter:junit-jupiter-api')
+    unitTestImplementation('org.junit.jupiter:junit-jupiter-params')
+    unitTestImplementation('org.mockito:mockito-junit-jupiter')
+    unitTestRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
+
+    integrationTestImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    integrationTestImplementation('org.junit.jupiter:junit-jupiter-api')
+    integrationTestImplementation('com.intuit.karate:karate-junit5:1.2.0.RC6')
+    integrationTestRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
 }
 
-tasks.named('test') {
+sourceSets {
+
+    main {
+        java.srcDirs('./src/main/java')
+        resources.srcDirs('./src/main/resources')
+    }
+
+    unitTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('./src/unitTest/java')
+        }
+        resources.srcDir file('./src/unitTest/resources')
+    }
+
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+
+            resources {
+                srcDir file('./src/integrationTest/java')
+                exclude '**/*.java'
+            }
+        }
+        resources.srcDir file('./src/integrationTest/resources')
+    }
+}
+
+tasks.withType(ProcessResources) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+task unitTest(type: Test) {
+    description = 'Runs unit tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.unitTest.output.classesDirs
+    classpath = sourceSets.unitTest.runtimeClasspath
+
     useJUnitPlatform()
+
+    testLogging {
+        events = ["passed", "failed", "skipped"]
+        showStandardStreams = true
+    }
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    systemProperty "karate.options", System.properties.getProperty("karate.options")
+    systemProperty "karate.env", System.properties.getProperty("karate.env")
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+
+    shouldRunAfter unitTest
+    useJUnitPlatform()
+
+    testLogging {
+        events = ["passed", "failed", "skipped"]
+        showStandardStreams = true
+    }
 }
