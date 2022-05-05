@@ -1,9 +1,34 @@
-plugins {
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-}
-
 group 'com.ilyastuit'
 version '1.0'
+
+ext {
+    appEnv = System.getenv("SPRING_PROFILES_ACTIVE") ?: "dev"
+    backendProjectDir = "backend"
+
+    springVersion = "5.3.19"
+
+    servletVersion = "4.0.1"
+    jakartaWsVersion = "3.1.0";
+    jakartaValidationVersion = "3.0.1";
+
+    hibernateVersion = "5.6.8.Final"
+    hikariCPVersion = "4.0.3"
+    hibernateValidatorVersion = "7.0.4.Final";
+
+    liquibaseVersion = "4.2.2"
+
+    logbackVersion = "1.2.11"
+
+    postgresVersion = "42.3.4"
+
+    jupiterApiVersion = "5.8.2"
+    jupiterParamsVersion = "5.8.2"
+    jupiterEngineVersion = "5.8.2"
+    mockitoJunitJupiterVersion = "4.5.1"
+
+    karateJunit5Version = "1.2.0.RC6"
+    karateApacheVersion = "0.9.6"
+}
 
 if (hasProperty('buildScan')) {
     buildScan {
@@ -13,8 +38,6 @@ if (hasProperty('buildScan')) {
 }
 
 subprojects {
-    apply plugin: 'io.spring.dependency-management'
-
     repositories {
         mavenCentral()
     }

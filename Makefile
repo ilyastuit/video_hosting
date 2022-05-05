@@ -1,21 +1,24 @@
-up: create-jar npm-install docker-build docker-up
+up: create-war npm-install docker-build docker-up migrations
 
 down: docker-down
 
-create-jar:
-	./gradlew clean bootJar --stacktrace --info
+create-war:
+	./gradlew cleanWar war --stacktrace
 
 clean-build:
-	./gradlew clean build --stacktrace --info
+	./gradlew clean build --stacktrace
 
 unit-tests:
-	./gradlew unitTest --rerun-tasks
+	./gradlew unitTest --rerun-tasks --stacktrace
 
 integration-tests:
 	./gradlew integrationTest --rerun-tasks
 
 npm-install:
-	cd frontend; npm install
+	#cd frontend; npm install
+
+migrations:
+	./gradlew update --stacktrace
 
 docker-build:
 	docker-compose build
@@ -30,10 +33,22 @@ watch-frontend:
 	docker-compose exec frontend-nodejs npm run watch
 
 build-backend:
-	docker-compose build backend
+	docker-compose build backend-tomcat
 
 restart-backend:
-	docker-compose restart backend
+	docker-compose restart backend-tomcat
+
+build-db-dev:
+	docker-compose build postgres-dev
+
+restart-db-dev:
+	docker-compose restart postgres-dev
+
+build-db-test:
+	docker-compose build postgres-test
+
+restart-db-test:
+	docker-compose restart postgres-test
 
 build-frontend:
 	docker-compose build frontend-nginx

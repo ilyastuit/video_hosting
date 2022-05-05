@@ -1,9 +1,0 @@
-FROM adoptopenjdk/openjdk15:ubi
-
-ENV APP_HOME=/backend/
-
-WORKDIR $APP_HOME
-
-EXPOSE 8081
-
-CMD ["java", "-jar", "app.jar"]

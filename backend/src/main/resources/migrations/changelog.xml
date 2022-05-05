@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd
+		http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
+
+
+<!--    <changeSet id="init-1" author="ilyas">-->
+<!--        <sqlFile encoding="UTF-8"-->
+<!--                 path="db/init.sql"-->
+<!--                 relativeToChangelogFile="true"-->
+<!--        />-->
+<!--    </changeSet>-->
+
+<!--    <changeSet id="init-1-rollback" author="ilyas">-->
+<!--        <sqlFile encoding="UTF-8"-->
+<!--                 path="db/drop.sql"-->
+<!--                 relativeToChangelogFile="true"-->
+<!--        />-->
+<!--        <rollback changeSetId="init-1" changeSetAuthor="ilyas" />-->
+<!--    </changeSet>-->
+
+
+</databaseChangeLog>
