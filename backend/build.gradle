@@ -54,6 +54,8 @@ dependencies {
     implementation("org.hibernate:hibernate-hikaricp:${rootProject.ext.hibernateVersion}")
     implementation("com.zaxxer:HikariCP:${rootProject.ext.hikariCPVersion}")
 
+    // Other
+    implementation("at.favre.lib:bcrypt:${rootProject.ext.bcryptLibraryVersion}")
 
     // Database Migration
     liquibaseRuntime("org.liquibase:liquibase-core:${rootProject.ext.liquibaseVersion}")
