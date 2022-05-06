@@ -1,18 +1,30 @@
 package com.ilyastuit.model.user.entity.user;
 
 import com.ilyastuit.model.exceptions.DomainException;
-import org.springframework.util.Assert;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+@Embeddable
 public class ConfirmToken {
 
-    private final String token;
-    private final LocalDateTime expires;
+    @Access(AccessType.FIELD)
+    private String token;
 
-    public ConfirmToken(String token, LocalDateTime expires) {
-        Assert.hasText(token, "Token should not be empty.");
+    @Access(AccessType.FIELD)
+    private LocalDateTime expires;
 
+    protected ConfirmToken() {}
+
+    public ConfirmToken(
+            @NotBlank(message = "Token should not be empty.") String token,
+            @NotNull(message = "Expiration date must not be null.") LocalDateTime expires
+    ) {
         this.token = token;
         this.expires = expires;
     }
@@ -36,5 +48,31 @@ public class ConfirmToken {
 
     public String getToken() {
         return token;
+    }
+
+    public boolean isEmpty() {
+        return this.token == null || this.token.isBlank();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ConfirmToken token1 = (ConfirmToken) o;
+        return Objects.equals(token, token1.token) &&
+                Objects.equals(expires, token1.expires);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(token, expires);
+    }
+
+    @Override
+    public String toString() {
+        return "ConfirmToken{" +
+                "token='" + token + '\'' +
+                ", expires=" + expires +
+                '}';
     }
 }

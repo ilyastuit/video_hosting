@@ -10,20 +10,18 @@
 		http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.9.xsd">
 
 
-<!--    <changeSet id="init-1" author="ilyas">-->
-<!--        <sqlFile encoding="UTF-8"-->
-<!--                 path="db/init.sql"-->
-<!--                 relativeToChangelogFile="true"-->
-<!--        />-->
-<!--    </changeSet>-->
+    <changeSet id="1651766631_create_user_users_table" author="ilyas">
+        <sqlFile encoding="UTF-8"
+                 path="db/1651766631_create_user_users_table.sql"
+                 relativeToChangelogFile="true"
+        />
 
-<!--    <changeSet id="init-1-rollback" author="ilyas">-->
-<!--        <sqlFile encoding="UTF-8"-->
-<!--                 path="db/drop.sql"-->
-<!--                 relativeToChangelogFile="true"-->
-<!--        />-->
-<!--        <rollback changeSetId="init-1" changeSetAuthor="ilyas" />-->
-<!--    </changeSet>-->
-
+        <rollback>
+            <sqlFile encoding="UTF-8"
+                     path="1651766632_rollback_create_user_users_table"
+                     relativeToChangelogFile="true"
+            />
+        </rollback>
+    </changeSet>
 
 </databaseChangeLog>

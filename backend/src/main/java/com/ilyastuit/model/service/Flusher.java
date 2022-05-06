@@ -1,4 +1,4 @@
-package com.ilyastuit.model;
+package com.ilyastuit.model.service;
 
 public interface Flusher {
 

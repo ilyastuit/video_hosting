@@ -1,26 +1,50 @@
 package com.ilyastuit.model.user.entity.user;
 
+import com.ilyastuit.model.user.entity.user.converter.EmailConverter;
 import com.ilyastuit.model.exceptions.DomainException;
+import com.ilyastuit.model.user.entity.user.converter.UserIdConverter;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
+@Entity
+@Table(name = "user_users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"email"})
+})
 public class User {
 
     private static final String USER_WAIT = "wait";
     private static final String USER_ACTIVE = "active";
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Convert(converter = UserIdConverter.class)
     private UserId id;
-    private Email email;
+
     private LocalDateTime date;
-    private String password;
+
+    @Convert(converter = EmailConverter.class)
+    private Email email;
+
+    @Column(name = "password_hash")
+    private String passwordHash;
+
+    @Embedded
+    @AttributeOverride(name = "token", column = @Column(name = "confirm_token_token"))
+    @AttributeOverride(name = "expires", column = @Column(name = "confirm_token_expires"))
     private ConfirmToken confirmToken;
+
+    @Column(length = 16)
     private String status;
 
-    public User(UserId id, LocalDateTime date, Email email, String password, ConfirmToken confirmToken) {
+    protected User() {}
+
+    public User(UserId id, LocalDateTime date, Email email, String passwordHash, ConfirmToken confirmToken) {
         this.id = id;
-        this.email = email;
         this.date = date;
-        this.password = password;
+        this.email = email;
+        this.passwordHash = passwordHash;
         this.confirmToken = confirmToken;
         status = User.USER_WAIT;
     }
@@ -44,10 +68,6 @@ public class User {
         return this.status.equals(User.USER_ACTIVE);
     }
 
-    public void setConfirmToken(String token, LocalDateTime date) {
-        this.confirmToken = new ConfirmToken(token, date);
-    }
-
     public UserId getId() {
         return id;
     }
@@ -65,6 +85,43 @@ public class User {
     }
 
     public String getPasswordHash() {
-        return password;
+        return passwordHash;
+    }
+
+    @PostLoad
+    public void checkEmbeds() {
+        if (this.confirmToken.isEmpty()) {
+            this.confirmToken = null;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(date, user.date) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(passwordHash, user.passwordHash) &&
+                Objects.equals(confirmToken, user.confirmToken) &&
+                Objects.equals(status, user.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, email, passwordHash, confirmToken, status);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", date=" + date +
+                ", email=" + email +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", confirmToken=" + confirmToken +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

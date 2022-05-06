@@ -1,7 +1,6 @@
 package com.ilyastuit.infrastructure.spring.config;
 
 import com.zaxxer.hikari.HikariDataSource;
-import org.hibernate.cfg.Environment;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +17,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.spi.PersistenceProvider;
 import javax.sql.DataSource;
 import java.util.Properties;
+
+import static org.hibernate.cfg.AvailableSettings.*;
 
 @Configuration
 @EnableTransactionManagement
@@ -92,9 +93,9 @@ public class DataSourceConfig {
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty(Environment.HBM2DDL_AUTO, hibernateHbm2ddlAuto);
-        properties.setProperty(Environment.SHOW_SQL, hibernateShowSql);
-        properties.setProperty(Environment.DIALECT, hibernateDialect);
+        properties.setProperty(HBM2DDL_AUTO, hibernateHbm2ddlAuto);
+        properties.setProperty(SHOW_SQL, hibernateShowSql);
+        properties.setProperty(DIALECT, hibernateDialect);
 
         properties.setProperty("hibernate.hikari.connectionTimeout", hibernateHikariConnectionTimeout);
         properties.setProperty("hibernate.hikari.minimumIdle", hibernateHikariMinimumIdle);

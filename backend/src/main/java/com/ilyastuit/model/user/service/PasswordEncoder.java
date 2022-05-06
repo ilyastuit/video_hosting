@@ -1,6 +1,6 @@
 package com.ilyastuit.model.user.service;
 
-public interface PasswordHasher {
+public interface PasswordEncoder {
 
     String hash(String password);
 
