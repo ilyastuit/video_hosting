@@ -1,9 +1,10 @@
 package com.ilyastuit.model.user.usecase.signup.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
-public class Command {
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+public class SignUpRequestCommand {
 
     @Email(message = "Incorrect email.")
     public String email;

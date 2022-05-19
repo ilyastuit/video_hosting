@@ -1,7 +1,7 @@
 CREATE
     TABLE user_users
 (
-    id                    UUID                           NOT NULL,
+    id                    bytea                          NOT NULL,
     date                  TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     email                 VARCHAR(255)                   NOT NULL,
     password_hash         VARCHAR(255)                   NOT NULL,

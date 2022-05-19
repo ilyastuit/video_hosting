@@ -1,30 +1,28 @@
 package com.ilyastuit.model.user.entity.user;
 
-import jakarta.validation.constraints.NotBlank;
-
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 public class UserId implements Serializable {
 
-    private final String id;
+    private final UUID id;
 
-    public UserId(@NotBlank(message = "Id must not be empty.") String id) {
+    public UserId(UUID id) {
         this.id = id;
     }
 
     public static UserId next() {
-        return new UserId(UUID.randomUUID().toString());
+        return new UserId(UUID.randomUUID());
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
     @Override
     public String toString() {
-        return this.id;
+        return this.id.toString();
     }
 
     @Override

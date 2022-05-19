@@ -3,9 +3,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <import resource="classpath:spring/common.xml"/>
-
-    <import resource="classpath:spring/context/model/service/model-services.xml"/>
-    <import resource="classpath:spring/context/model/user/user-beans.xml"/>
+    <bean id="jpaFlusher" class="com.ilyastuit.infrastructure.model.service.JPAFlusher" />
 
 </beans>

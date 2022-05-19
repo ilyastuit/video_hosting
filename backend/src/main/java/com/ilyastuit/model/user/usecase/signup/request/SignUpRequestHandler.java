@@ -10,24 +10,26 @@ import com.ilyastuit.model.user.repository.UserRepository;
 import com.ilyastuit.model.user.service.PasswordEncoder;
 import com.ilyastuit.model.user.service.ConfirmTokenizer;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
-public class Handler {
+public class SignUpRequestHandler {
 
     private final UserRepository users;
     private final PasswordEncoder hasher;
     private final ConfirmTokenizer tokenizer;
     private final Flusher flusher;
 
-    public Handler(UserRepository users, PasswordEncoder hasher, ConfirmTokenizer tokenizer, Flusher flusher) {
+    public SignUpRequestHandler(UserRepository users, PasswordEncoder hasher, ConfirmTokenizer tokenizer, Flusher flusher) {
         this.users = users;
         this.hasher = hasher;
         this.tokenizer = tokenizer;
         this.flusher = flusher;
     }
 
-    public void handle(Command command) throws DomainException {
-        Email email = new Email(command.email);
+    @Transactional
+    public void handle(SignUpRequestCommand signUpRequestCommand) throws DomainException {
+        Email email = new Email(signUpRequestCommand.email);
 
         if (this.users.hasByEmail(email)) {
             throw new DomainException("User wth this email already exists.");
@@ -38,7 +40,7 @@ public class Handler {
                 UserId.next(),
                 LocalDateTime.now(),
                 email,
-                this.hasher.hash(command.password),
+                this.hasher.hash(signUpRequestCommand.password),
                 token
         );
 

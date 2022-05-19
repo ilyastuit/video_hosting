@@ -36,6 +36,10 @@ public class DataSourceConfig {
     private String hibernateDialect;
     @Value("${hibernate.show_sql}")
     private String hibernateShowSql;
+    @Value("${hibernate.flush_mode}")
+    private String hibernateFlushMode;
+    @Value("${hibernate.connection.autocommit}")
+    private String hibernateConnectionAutocommit;
     @Value("${hibernate.hikari.connectionTimeout}")
     private String hibernateHikariConnectionTimeout;
     @Value("${hibernate.hikari.minimumIdle}")
@@ -72,14 +76,6 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager() {
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
-
-        return transactionManager;
-    }
-
-    @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
         return new PersistenceExceptionTranslationPostProcessor();
     }
@@ -96,6 +92,8 @@ public class DataSourceConfig {
         properties.setProperty(HBM2DDL_AUTO, hibernateHbm2ddlAuto);
         properties.setProperty(SHOW_SQL, hibernateShowSql);
         properties.setProperty(DIALECT, hibernateDialect);
+        properties.setProperty(FLUSH_MODE, hibernateFlushMode);
+        properties.setProperty(AUTOCOMMIT, hibernateConnectionAutocommit);
 
         properties.setProperty("hibernate.hikari.connectionTimeout", hibernateHikariConnectionTimeout);
         properties.setProperty("hibernate.hikari.minimumIdle", hibernateHikariMinimumIdle);

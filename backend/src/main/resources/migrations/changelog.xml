@@ -18,7 +18,7 @@
 
         <rollback>
             <sqlFile encoding="UTF-8"
-                     path="1651766632_rollback_create_user_users_table"
+                     path="db/1651766632_rollback_create_user_users_table.sql"
                      relativeToChangelogFile="true"
             />
         </rollback>

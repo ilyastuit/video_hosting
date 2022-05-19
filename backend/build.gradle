@@ -38,12 +38,17 @@ dependencies {
 
     // Javax (Jakarta) API
     compileOnly("javax.servlet:javax.servlet-api:${rootProject.ext.servletVersion}")
-    compileOnly("jakarta.validation:jakarta.validation-api:${rootProject.ext.jakartaValidationVersion}")
 
     // Javax (Jakarta) Implementation
-    implementation("org.hibernate.validator:hibernate-validator:${rootProject.ext.hibernateValidatorVersion}") {
-        exclude group: "jakarta.validation", module: "jakarta.validation-api"
-    }
+    implementation("org.hibernate.validator:hibernate-validator:${rootProject.ext.hibernateValidatorVersion}")
+
+    // Http Converters
+    implementation("com.fasterxml.jackson.core:jackson-databind:${rootProject.ext.jacksonVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-core:${rootProject.ext.jacksonVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:${rootProject.ext.jacksonVersion}")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${rootProject.ext.jacksonVersion}")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:${rootProject.ext.jacksonVersion}")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-smile:${rootProject.ext.jacksonVersion}")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:${rootProject.ext.logbackVersion}")
@@ -56,6 +61,7 @@ dependencies {
 
     // Other
     implementation("at.favre.lib:bcrypt:${rootProject.ext.bcryptLibraryVersion}")
+    implementation("org.glassfish.expressly:expressly:${rootProject.ext.expresslyVersion}")
 
     // Database Migration
     liquibaseRuntime("org.liquibase:liquibase-core:${rootProject.ext.liquibaseVersion}")

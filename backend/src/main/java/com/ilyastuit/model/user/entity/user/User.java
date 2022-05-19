@@ -1,8 +1,8 @@
 package com.ilyastuit.model.user.entity.user;
 
-import com.ilyastuit.model.user.entity.user.converter.EmailConverter;
+import com.ilyastuit.infrastructure.model.user.entity.user.converter.EmailConverter;
 import com.ilyastuit.model.exceptions.DomainException;
-import com.ilyastuit.model.user.entity.user.converter.UserIdConverter;
+import com.ilyastuit.infrastructure.model.user.entity.user.converter.UserIdConverter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ public class User {
     private static final String USER_ACTIVE = "active";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "BINARY(16)")
     @Convert(converter = UserIdConverter.class)
     private UserId id;
 

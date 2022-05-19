@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bCryptPasswordEncoder" class="com.ilyastuit.infrastructure.model.user.service.BCryptPasswordEncoder">
+        <constructor-arg name="cost" value="${auth.password.encoder.cost}"/>
+    </bean>
+
+    <bean id="randConfirmTokenizer" class="com.ilyastuit.infrastructure.model.user.service.RandConfirmTokenizer">
+        <constructor-arg name="intervalInDays" value="${auth.signup.confirm.interval}"/>
+    </bean>
+
+    <bean id="jpaSQLUserRepository" class="com.ilyastuit.infrastructure.model.user.repository.JPASQLUserRepository" />
+
+    <bean id="signupConfirmtHandler" class="com.ilyastuit.model.user.usecase.signup.confirm.SingUpConfirmHandler">
+        <constructor-arg index="0" ref="jpaSQLUserRepository"/>
+        <constructor-arg index="1" ref="jpaFlusher"/>
+    </bean>
+
+    <bean id="signupRequestHandler" class="com.ilyastuit.model.user.usecase.signup.request.SignUpRequestHandler">
+        <constructor-arg index="0" ref="jpaSQLUserRepository"/>
+        <constructor-arg index="1" ref="bCryptPasswordEncoder"/>
+        <constructor-arg index="2" ref="randConfirmTokenizer"/>
+        <constructor-arg index="3" ref="jpaFlusher"/>
+    </bean>
+
+</beans>

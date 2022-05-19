@@ -6,22 +6,24 @@ import com.ilyastuit.model.user.entity.user.Email;
 import com.ilyastuit.model.user.entity.user.User;
 import com.ilyastuit.model.user.repository.UserRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
-public class Handler {
+public class SingUpConfirmHandler {
 
     private final UserRepository users;
     private final Flusher flusher;
 
-    public Handler(UserRepository users, Flusher flusher) {
+    public SingUpConfirmHandler(UserRepository users, Flusher flusher) {
         this.users = users;
         this.flusher = flusher;
     }
 
-    public void handle(Command command) throws DomainException {
-        User user = this.users.getByEmail(new Email(command.email));
+    @Transactional
+    public void handle(SignUpConfirmCommand signUpConfirmCommand) throws DomainException {
+        User user = this.users.getByEmail(new Email(signUpConfirmCommand.email));
 
-        user.confirmSignUp(command.token, LocalDateTime.now());
+        user.confirmSignUp(signUpConfirmCommand.token, LocalDateTime.now());
 
         this.flusher.flush();
     }

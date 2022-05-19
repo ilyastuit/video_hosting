@@ -1,4 +1,4 @@
-package com.ilyastuit.model.user.entity.user.converter;
+package com.ilyastuit.infrastructure.model.user.entity.user.converter;
 
 import com.ilyastuit.model.user.entity.user.Email;
 

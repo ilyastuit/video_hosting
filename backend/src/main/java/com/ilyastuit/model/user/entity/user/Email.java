@@ -6,9 +6,7 @@ public class Email {
 
     private final String emailValue;
 
-    public Email(
-            @jakarta.validation.constraints.Email(message = "Incorrect email.") String emailValue
-    ) {
+    public Email(String emailValue) {
         this.emailValue = emailValue.toLowerCase();
     }
 

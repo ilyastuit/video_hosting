@@ -6,10 +6,7 @@ import com.ilyastuit.model.user.entity.user.Email;
 import com.ilyastuit.model.user.entity.user.User;
 import com.ilyastuit.model.user.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.PersistenceContext;
+import javax.persistence.*;
 
 public class JPASQLUserRepository implements UserRepository {
 
@@ -19,8 +16,8 @@ public class JPASQLUserRepository implements UserRepository {
     @Override
     public boolean hasByEmail(Email email) {
         return entityManager
-                .createQuery("select count(u.id) from User u where u.email = :email", Integer.class)
-                .setParameter("email", email.getEmailValue())
+                .createQuery("select count(u.id) from User u where u.email = :email", Long.class)
+                .setParameter("email", email)
                 .getSingleResult() > 0;
     }
 
@@ -31,7 +28,7 @@ public class JPASQLUserRepository implements UserRepository {
         try {
             user = entityManager
                     .createQuery("select u from User u where u.email = :email", User.class)
-                    .setParameter("email", email.getEmailValue())
+                    .setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException e) {
             throw new EntityNotFoundException("User is not found.");

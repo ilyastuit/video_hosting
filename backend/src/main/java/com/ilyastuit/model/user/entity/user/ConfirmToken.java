@@ -1,8 +1,6 @@
 package com.ilyastuit.model.user.entity.user;
 
 import com.ilyastuit.model.exceptions.DomainException;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -21,10 +19,7 @@ public class ConfirmToken {
 
     protected ConfirmToken() {}
 
-    public ConfirmToken(
-            @NotBlank(message = "Token should not be empty.") String token,
-            @NotNull(message = "Expiration date must not be null.") LocalDateTime expires
-    ) {
+    public ConfirmToken(String token, LocalDateTime expires) {
         this.token = token;
         this.expires = expires;
     }
