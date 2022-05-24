@@ -1,7 +1,7 @@
 package com.ilyastuit.infrastructure.model.user.repository;
 
-import com.ilyastuit.model.exceptions.DomainException;
-import com.ilyastuit.model.exceptions.EntityNotFoundException;
+import com.ilyastuit.model.exception.DomainException;
+import com.ilyastuit.model.exception.EntityNotFoundException;
 import com.ilyastuit.model.user.entity.user.Email;
 import com.ilyastuit.model.user.entity.user.User;
 import com.ilyastuit.model.user.repository.UserRepository;
@@ -31,9 +31,9 @@ public class JPASQLUserRepository implements UserRepository {
                     .setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException e) {
-            throw new EntityNotFoundException("User is not found.");
+            throw new EntityNotFoundException("User is not found.", e.getCause());
         } catch (NonUniqueResultException e) {
-            throw new DomainException(e.getMessage());
+            throw new DomainException(e.getMessage(), e.getCause());
         }
 
         return user;

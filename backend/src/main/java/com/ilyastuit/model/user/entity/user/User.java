@@ -1,7 +1,7 @@
 package com.ilyastuit.model.user.entity.user;
 
 import com.ilyastuit.infrastructure.model.user.entity.user.converter.EmailConverter;
-import com.ilyastuit.model.exceptions.DomainException;
+import com.ilyastuit.model.exception.DomainException;
 import com.ilyastuit.infrastructure.model.user.entity.user.converter.UserIdConverter;
 
 import javax.persistence.*;
@@ -90,7 +90,7 @@ public class User {
 
     @PostLoad
     public void checkEmbeds() {
-        if (this.confirmToken.isEmpty()) {
+        if (this.confirmToken != null && this.confirmToken.isEmpty()) {
             this.confirmToken = null;
         }
     }

@@ -1,7 +1,7 @@
 package com.ilyastuit.model.user.usecase.signup.request;
 
 import com.ilyastuit.model.service.Flusher;
-import com.ilyastuit.model.exceptions.DomainException;
+import com.ilyastuit.model.exception.DomainException;
 import com.ilyastuit.model.user.entity.user.ConfirmToken;
 import com.ilyastuit.model.user.entity.user.Email;
 import com.ilyastuit.model.user.entity.user.User;
@@ -20,7 +20,11 @@ public class SignUpRequestHandler {
     private final ConfirmTokenizer tokenizer;
     private final Flusher flusher;
 
-    public SignUpRequestHandler(UserRepository users, PasswordEncoder hasher, ConfirmTokenizer tokenizer, Flusher flusher) {
+    public SignUpRequestHandler(
+            final UserRepository users,
+            final PasswordEncoder hasher,
+            final ConfirmTokenizer tokenizer,
+            final Flusher flusher) {
         this.users = users;
         this.hasher = hasher;
         this.tokenizer = tokenizer;
@@ -28,11 +32,11 @@ public class SignUpRequestHandler {
     }
 
     @Transactional
-    public void handle(SignUpRequestCommand signUpRequestCommand) throws DomainException {
+    public UserId handle(SignUpRequestCommand signUpRequestCommand) throws DomainException {
         Email email = new Email(signUpRequestCommand.email);
 
         if (this.users.hasByEmail(email)) {
-            throw new DomainException("User wth this email already exists.");
+            throw new DomainException("User with this email already exists.");
         }
 
         ConfirmToken token = tokenizer.generate();
@@ -47,6 +51,8 @@ public class SignUpRequestHandler {
         this.users.add(user);
 
         this.flusher.flush();
+
+        return user.getId();
     }
 
 }

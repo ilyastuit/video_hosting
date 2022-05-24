@@ -1,6 +1,6 @@
 package com.ilyastuit.model.user.repository;
 
-import com.ilyastuit.model.exceptions.DomainException;
+import com.ilyastuit.model.exception.DomainException;
 import com.ilyastuit.model.user.entity.user.Email;
 import com.ilyastuit.model.user.entity.user.User;
 

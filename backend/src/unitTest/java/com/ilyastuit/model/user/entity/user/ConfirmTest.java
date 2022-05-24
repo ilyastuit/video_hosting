@@ -1,6 +1,6 @@
 package com.ilyastuit.model.user.entity.user;
 
-import com.ilyastuit.model.exceptions.DomainException;
+import com.ilyastuit.model.exception.DomainException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
