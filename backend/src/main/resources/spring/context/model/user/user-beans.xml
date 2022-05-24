@@ -13,12 +13,12 @@
 
     <bean id="jpaSQLUserRepository" class="com.ilyastuit.infrastructure.model.user.repository.JPASQLUserRepository" />
 
-    <bean id="signupConfirmtHandler" class="com.ilyastuit.model.user.usecase.signup.confirm.SingUpConfirmHandler">
+    <bean id="signUpConfirmHandler" class="com.ilyastuit.model.user.usecase.signup.confirm.SingUpConfirmHandler">
         <constructor-arg index="0" ref="jpaSQLUserRepository"/>
         <constructor-arg index="1" ref="jpaFlusher"/>
     </bean>
 
-    <bean id="signupRequestHandler" class="com.ilyastuit.model.user.usecase.signup.request.SignUpRequestHandler">
+    <bean id="signUpRequestHandler" class="com.ilyastuit.model.user.usecase.signup.request.SignUpRequestHandler">
         <constructor-arg index="0" ref="jpaSQLUserRepository"/>
         <constructor-arg index="1" ref="bCryptPasswordEncoder"/>
         <constructor-arg index="2" ref="randConfirmTokenizer"/>

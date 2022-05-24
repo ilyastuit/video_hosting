@@ -48,8 +48,6 @@ public class SignUpRequestAction {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response.toString());
         }
 
-
-
         try {
             handler.handle(command);
         } catch (DomainException e) {

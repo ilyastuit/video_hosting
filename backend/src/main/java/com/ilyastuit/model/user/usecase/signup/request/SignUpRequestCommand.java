@@ -1,6 +1,5 @@
 package com.ilyastuit.model.user.usecase.signup.request;
 
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
