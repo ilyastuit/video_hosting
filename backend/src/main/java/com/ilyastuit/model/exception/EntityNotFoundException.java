@@ -1,4 +1,4 @@
-package com.ilyastuit.model.exceptions;
+package com.ilyastuit.model.exception;
 
 public class EntityNotFoundException extends DomainException{
 
@@ -6,4 +6,7 @@ public class EntityNotFoundException extends DomainException{
         super(message);
     }
 
+    public EntityNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
