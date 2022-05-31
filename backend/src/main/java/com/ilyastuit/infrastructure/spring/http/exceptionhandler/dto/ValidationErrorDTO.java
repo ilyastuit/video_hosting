@@ -17,9 +17,9 @@ public class ValidationErrorDTO implements HttpErrorDTO {
 
     private static final ErrorCode code = ErrorCode.VALIDATION_ERROR;
     private final String message;
-    private final Set<? extends ConstraintViolation<? extends Object>> violations;
+    private final Set<? extends ConstraintViolation<?>> violations;
 
-    public ValidationErrorDTO(Set<? extends ConstraintViolation<? extends Object>> violations) {
+    public ValidationErrorDTO(Set<? extends ConstraintViolation<?>> violations) {
         this.violations = violations;
 
         this.message = VALIDATION_MESSAGE;

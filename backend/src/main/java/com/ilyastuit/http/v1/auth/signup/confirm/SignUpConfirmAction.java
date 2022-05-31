@@ -28,7 +28,7 @@ public class SignUpConfirmAction {
     }
 
     @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Void> confirm(@RequestBody SignUpConfirmCommand command) throws DomainException {
+    public ResponseEntity<Void> confirm(@RequestBody SignUpConfirmCommand command) throws DomainException, ValidationException {
         Set<ConstraintViolation<SignUpConfirmCommand>> violations = validator.validate(command);
 
         if (!violations.isEmpty()) {

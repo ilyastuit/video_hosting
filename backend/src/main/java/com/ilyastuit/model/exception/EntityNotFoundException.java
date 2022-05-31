@@ -1,6 +1,6 @@
 package com.ilyastuit.model.exception;
 
-public class EntityNotFoundException extends DomainException{
+public class EntityNotFoundException extends DomainException {
 
     public EntityNotFoundException(String message) {
         super(message);

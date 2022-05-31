@@ -1,6 +1,7 @@
 package com.ilyastuit.model.user.entity.user;
 
 import com.ilyastuit.infrastructure.model.user.entity.user.converter.EmailConverter;
+import com.ilyastuit.infrastructure.model.user.entity.user.converter.UserStatusConverter;
 import com.ilyastuit.model.exception.DomainException;
 import com.ilyastuit.infrastructure.model.user.entity.user.converter.UserIdConverter;
 
@@ -13,9 +14,6 @@ import java.util.Objects;
         @UniqueConstraint(columnNames = {"email"})
 })
 public class User {
-
-    private static final String USER_WAIT = "wait";
-    private static final String USER_ACTIVE = "active";
 
     @Id
     @Column(columnDefinition = "BINARY(16)")
@@ -36,7 +34,8 @@ public class User {
     private ConfirmToken confirmToken;
 
     @Column(length = 16)
-    private String status;
+    @Convert(converter = UserStatusConverter.class)
+    private UserStatus status;
 
     protected User() {}
 
@@ -46,7 +45,7 @@ public class User {
         this.email = email;
         this.passwordHash = passwordHash;
         this.confirmToken = confirmToken;
-        status = User.USER_WAIT;
+        status = UserStatus.WAIT;
     }
 
     public void confirmSignUp(String token, LocalDateTime date) throws DomainException {
@@ -56,16 +55,16 @@ public class User {
 
         this.confirmToken.validate(token, date);
 
-        this.status = User.USER_ACTIVE;
+        this.status = UserStatus.ACTIVE;
         this.confirmToken = null;
     }
 
     public boolean isWait() {
-        return this.status.equals(User.USER_WAIT);
+        return this.status.equals(UserStatus.WAIT);
     }
 
     public boolean isActive() {
-        return this.status.equals(User.USER_ACTIVE);
+        return this.status.equals(UserStatus.ACTIVE);
     }
 
     public UserId getId() {

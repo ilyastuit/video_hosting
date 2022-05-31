@@ -30,7 +30,7 @@ public class SignUpRequestAction {
     }
 
     @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<String> handle(@RequestBody SignUpRequestCommand command) throws DomainException {
+    public ResponseEntity<String> handle(@RequestBody SignUpRequestCommand command) throws DomainException, ValidationException {
         Set<ConstraintViolation<SignUpRequestCommand>> violations = validator.validate(command);
 
         if (!violations.isEmpty()) {
