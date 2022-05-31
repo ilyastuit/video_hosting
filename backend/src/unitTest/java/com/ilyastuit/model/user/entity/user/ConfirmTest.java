@@ -1,5 +1,6 @@
 package com.ilyastuit.model.user.entity.user;
 
+import com.ilyastuit.model.builder.UserBuilder;
 import com.ilyastuit.model.exception.DomainException;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class ConfirmTest {
         LocalDateTime now = LocalDateTime.now();
         ConfirmToken token = new ConfirmToken("token", now.plusDays(1L));
 
-        User user = this.signUp(token);
+        User user = this.signUp(now, token);
 
         assertTrue(user.isWait());
         assertFalse(user.isActive());
@@ -32,7 +33,7 @@ public class ConfirmTest {
         LocalDateTime now = LocalDateTime.now();
         ConfirmToken token = new ConfirmToken("token", now.plusDays(1L));
 
-        User user = this.signUp(token);
+        User user = this.signUp(now, token);
 
         DomainException exception = assertThrows(DomainException.class, () -> user.confirmSignUp("invalid token", now));
 
@@ -44,7 +45,7 @@ public class ConfirmTest {
         LocalDateTime now = LocalDateTime.now();
         ConfirmToken token = new ConfirmToken("token", now.plusDays(1L));
 
-        User user = this.signUp(token);
+        User user = this.signUp(now, token);
         user.confirmSignUp(token.getToken(), now);
 
         DomainException exception = assertThrows(DomainException.class, () -> user.confirmSignUp(token.getToken(), now));
@@ -57,20 +58,17 @@ public class ConfirmTest {
         LocalDateTime now = LocalDateTime.now();
         ConfirmToken token = new ConfirmToken("token", now);
 
-        User user = this.signUp(token);
+        User user = this.signUp(now, token);
 
         DomainException exception = assertThrows(DomainException.class, () -> user.confirmSignUp(token.getToken(), now.plusDays(1L)));
 
         assertEquals("Confirm token is expired.", exception.getMessage());
     }
 
-    private User signUp(ConfirmToken token) {
-        return new User(
-                UserId.next(),
-                LocalDateTime.now(),
-                new Email("mail@example.com"),
-                "hash",
-                token
-        );
+    private User signUp(LocalDateTime date, ConfirmToken token) {
+        return (new UserBuilder())
+                .withDate(date)
+                .withConfirmToken(token)
+                .build();
     }
 }
