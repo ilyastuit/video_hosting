@@ -36,7 +36,7 @@ build-backend:
 	docker-compose build backend-tomcat
 
 restart-backend:
-	create-war
+	make create-war
 	docker-compose restart backend-tomcat
 
 build-db-dev:

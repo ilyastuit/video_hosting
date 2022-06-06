@@ -27,14 +27,10 @@ configurations {
 
 dependencies {
     // Spring
-    implementation("org.springframework:spring-aop:${rootProject.ext.springVersion}")
-    implementation("org.springframework:spring-beans:${rootProject.ext.springVersion}")
-    implementation("org.springframework:spring-context:${rootProject.ext.springVersion}")
-    implementation("org.springframework:spring-core:${rootProject.ext.springVersion}")
-    implementation("org.springframework:spring-expression:${rootProject.ext.springVersion}")
-    implementation("org.springframework:spring-web:${rootProject.ext.springVersion}")
     implementation("org.springframework:spring-webmvc:${rootProject.ext.springVersion}")
+    implementation("org.springframework:spring-aspects:${rootProject.ext.springVersion}")
     implementation("org.springframework:spring-orm:${rootProject.ext.springVersion}")
+    implementation("org.springframework.kafka:spring-kafka:2.8.6")
 
     // Javax (Jakarta) API
     compileOnly("javax.servlet:javax.servlet-api:${rootProject.ext.servletVersion}")
@@ -44,17 +40,11 @@ dependencies {
 
     // Http Converters
     implementation("com.fasterxml.jackson.core:jackson-databind:${rootProject.ext.jacksonVersion}")
-    implementation("com.fasterxml.jackson.core:jackson-core:${rootProject.ext.jacksonVersion}")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:${rootProject.ext.jacksonVersion}")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${rootProject.ext.jacksonVersion}")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:${rootProject.ext.jacksonVersion}")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-smile:${rootProject.ext.jacksonVersion}")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:${rootProject.ext.logbackVersion}")
 
     // Persistence
-    implementation("org.hibernate:hibernate-core:${rootProject.ext.hibernateVersion}")
     implementation("org.hibernate:hibernate-entitymanager:${rootProject.ext.hibernateVersion}")
     implementation("org.hibernate:hibernate-hikaricp:${rootProject.ext.hibernateVersion}")
     implementation("com.zaxxer:HikariCP:${rootProject.ext.hikariCPVersion}")
@@ -71,7 +61,6 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql:${rootProject.ext.postgresVersion}")
 
     // Unit Test
-    unitTestImplementation("org.junit.jupiter:junit-jupiter-api:${rootProject.ext.jupiterApiVersion}")
     unitTestImplementation("org.junit.jupiter:junit-jupiter-params:${rootProject.ext.jupiterParamsVersion}")
     unitTestImplementation("org.mockito:mockito-junit-jupiter:${rootProject.ext.mockitoJunitJupiterVersion}")
     unitTestRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${rootProject.ext.jupiterEngineVersion}")
