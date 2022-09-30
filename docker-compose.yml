@@ -24,6 +24,29 @@ services:
       - "8080:8080"
       - "9000:8000"
 
+  backend-tomcat-test:
+    build:
+      context: ./backend
+      dockerfile: ./docker/dev/tomcat/Dockerfile
+    container_name: backend-tomcat-test
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+      JAVA_OPTS: -Dspring.profiles.active=test
+      JPDA_ADDRESS: "*:8000"
+      JPDA_TRANSPORT: dt_socket
+    links:
+      - postgres-test:postgres-test
+    depends_on:
+      - postgres-test
+    volumes:
+      - ./backend/docker/test/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+      - ./backend/docker/test/tomcat/conf/server.xml:/usr/local/tomcat/conf/server.xml
+      - ./backend/docker/test/tomcat/conf/context.xml:/usr/local/tomcat/conf/context.xml
+      - ./backend/build/libs/backend-tomcat.war:/usr/local/tomcat/webapps/backend-tomcat.war
+    ports:
+      - "8081:8080"
+      - "9001:8000"
+
 #  frontend-nginx:
 #    build:
 #      context: ./frontend

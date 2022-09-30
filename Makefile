@@ -1,6 +1,6 @@
-up: create-war npm-install docker-build docker-up migrations
+up: create-war npm-install docker-build docker-up migrations-dev migrations-test
 
-down: docker-down
+down: migrations-drop-test docker-down
 
 create-war:
 	./gradlew cleanWar war --stacktrace
@@ -17,8 +17,14 @@ integration-tests:
 npm-install:
 	#cd frontend; npm install
 
-migrations:
-	./gradlew update --stacktrace
+migrations-dev:
+	GRADLE_ENV=dev ./gradlew update --stacktrace
+
+migrations-test:
+	GRADLE_ENV=test ./gradlew update --stacktrace
+
+migrations-drop-test:
+	GRADLE_ENV=test ./gradlew dropAll --stacktrace
 
 docker-build:
 	docker-compose build

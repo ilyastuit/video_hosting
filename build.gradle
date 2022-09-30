@@ -2,7 +2,7 @@ group 'com.ilyastuit'
 version '1.0'
 
 ext {
-    appEnv = System.getenv("SPRING_PROFILES_ACTIVE") ?: "dev"
+    appEnv = System.getenv("GRADLE_ENV") ?: "dev"
     backendProjectDir = "backend"
 
     springVersion = "5.3.19"

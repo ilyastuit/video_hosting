@@ -1,15 +1,22 @@
 package com.ilyastuit.http.v1.auth.signup;
 
+import com.ilyastuit.BaseTest;
 import com.intuit.karate.junit5.Karate;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 
-class SignUpRequestRunner {
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+class SignUpRequestRunner extends BaseTest {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @AfterEach
-    @BeforeEach
     void deleteUser() {
-        System.out.println("Hello from deleteUser");
+        entityManager
+                .createNativeQuery("delete from user_users")
+                .executeUpdate();
     }
 
     @Karate.Test
